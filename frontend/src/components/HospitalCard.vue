@@ -277,4 +277,35 @@ defineProps({
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
 }
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-rating-wrapper {
+    text-align: left;
+  }
+
+  .card-rating {
+    flex-direction: row;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-image-wrapper {
+    height: 200px;
+  }
+
+  .card-content {
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+}
 </style>

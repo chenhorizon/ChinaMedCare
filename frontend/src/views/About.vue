@@ -46,4 +46,26 @@ const { t } = useI18n()
   line-height: 1.8;
   margin-bottom: 16px;
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .about {
+    padding: 40px 0;
+  }
+
+  .page-title {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .about-content h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-title {
+    font-size: 24px;
+  }
+}
 </style>

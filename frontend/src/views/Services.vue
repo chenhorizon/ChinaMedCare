@@ -93,4 +93,40 @@ const services = [
   margin-bottom: 32px;
   font-size: 16px;
 }
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .service-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .services {
+    padding: 40px 0;
+  }
+
+  .page-title {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .service-card-large {
+    padding: 32px 24px;
+  }
+
+  .service-icon {
+    font-size: 48px;
+  }
+
+  .service-card-large h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-title {
+    font-size: 24px;
+  }
+}
 </style>

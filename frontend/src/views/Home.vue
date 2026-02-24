@@ -806,4 +806,174 @@ const selectDepartment = (dept) => {
 .cta-card .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.15);
 }
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .trust-items {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .hospital-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .specialty-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonial-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cta-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .cta-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .trust-banner {
+    padding: 16px 0;
+  }
+
+  .trust-items {
+    gap: 12px 20px;
+  }
+
+  .trust-item {
+    font-size: 12px;
+  }
+
+  .hero {
+    padding: 48px 0 60px;
+    min-height: auto;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .stat-number {
+    font-size: 24px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .section-header.centered {
+    align-items: center;
+  }
+
+  .hospital-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-section {
+    padding: 48px 0;
+  }
+
+  .cta-card {
+    padding: 32px 24px;
+  }
+
+  .cta-content h2 {
+    font-size: 24px;
+  }
+
+  .cta-actions {
+    flex-direction: column;
+  }
+
+  .cta-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .trust-items {
+    justify-content: space-between;
+  }
+
+  .trust-item {
+    gap: 6px;
+  }
+
+  .trust-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+  }
+
+  .search-box {
+    padding: 12px;
+  }
+
+  .search-quick {
+    gap: 8px;
+  }
+
+  .quick-label {
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .specialty-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stats {
+    gap: 16px 32px;
+    justify-content: space-between;
+  }
+}
 </style>

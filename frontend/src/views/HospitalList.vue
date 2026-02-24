@@ -103,4 +103,35 @@ const filteredHospitals = computed(() => {
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .hospital-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .hospital-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .hospital-list {
+    padding: 24px 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-title {
+    font-size: 24px;
+  }
+}
 </style>
