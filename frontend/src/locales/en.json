@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "home": "Home",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "services": "Services",
+    "cost": "Cost Estimator",
+    "about": "About Us",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "home": {
+    "heroTitle": "Your Gateway to World-Class Medical Care in China",
+    "heroSubtitle": "Connect with top hospitals, expert doctors, and seamless medical services",
+    "findHospital": "Find a Hospital",
+    "findDoctor": "Find a Doctor",
+    "featuredHospitals": "Featured Hospitals",
+    "popularDepartments": "Popular Departments",
+    "howItWorks": "How It Works",
+    "step1": "Search & Choose",
+    "step1Desc": "Find hospitals and doctors that match your needs",
+    "step2": "Book Appointment",
+    "step2Desc": "Schedule your visit online easily",
+    "step3": "Get Care",
+    "step3Desc": "Receive world-class medical treatment in China"
+  },
+  "hospital": {
+    "departments": "Departments",
+    "location": "Location",
+    "rating": "Rating",
+    "languages": "Languages",
+    "viewDetails": "View Details",
+    "bookNow": "Book Now"
+  },
+  "services": {
+    "title": "Our Services",
+    "appointmentBooking": "Appointment Booking",
+    "appointmentBookingDesc": "Book appointments with top doctors online",
+    "medicalTranslation": "Medical Translation",
+    "medicalTranslationDesc": "Professional translation of medical records",
+    "escortService": "Medical Escort",
+    "escortServiceDesc": "Professional escort for your hospital visits",
+    "visaAssistance": "Visa Assistance",
+    "visaAssistanceDesc": "Help with medical visa application"
+  },
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "loading": "Loading..."
+  }
+}

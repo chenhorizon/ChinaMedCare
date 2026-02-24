@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "home": "首页",
+    "hospitals": "找医院",
+    "doctors": "找医生",
+    "services": "服务中心",
+    "cost": "费用估算",
+    "about": "关于我们",
+    "login": "登录",
+    "signup": "注册"
+  },
+  "home": {
+    "heroTitle": "您来华就医的首选平台",
+    "heroSubtitle": "连接顶级医院、专家医生和一站式医疗服务",
+    "findHospital": "找医院",
+    "findDoctor": "找医生",
+    "featuredHospitals": "推荐医院",
+    "popularDepartments": "热门科室",
+    "howItWorks": "服务流程",
+    "step1": "搜索选择",
+    "step1Desc": "找到符合您需求的医院和医生",
+    "step2": "预约挂号",
+    "step2Desc": "在线轻松预约就诊",
+    "step3": "接受治疗",
+    "step3Desc": "在中国接受世界级医疗服务"
+  },
+  "hospital": {
+    "departments": "科室",
+    "location": "位置",
+    "rating": "评分",
+    "languages": "语言",
+    "viewDetails": "查看详情",
+    "bookNow": "立即预约"
+  },
+  "services": {
+    "title": "我们的服务",
+    "appointmentBooking": "预约挂号",
+    "appointmentBookingDesc": "在线预约顶级专家",
+    "medicalTranslation": "病历翻译",
+    "medicalTranslationDesc": "专业的医疗文件翻译服务",
+    "escortService": "陪诊服务",
+    "escortServiceDesc": "专业陪诊员全程陪同就医",
+    "visaAssistance": "签证协助",
+    "visaAssistanceDesc": "协助办理医疗签证"
+  },
+  "common": {
+    "search": "搜索",
+    "filter": "筛选",
+    "submit": "提交",
+    "cancel": "取消",
+    "loading": "加载中..."
+  }
+}

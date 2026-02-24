@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "hospitals": "病院",
+    "doctors": "医師",
+    "services": "サービス",
+    "cost": "費用見積もり",
+    "about": "私たちについて",
+    "login": "ログイン",
+    "signup": "新規登録"
+  },
+  "home": {
+    "heroTitle": "中国での一流医療への入り口",
+    "heroSubtitle": "トップ病院、専門医、シームレスな医療サービス",
+    "findHospital": "病院を探す",
+    "findDoctor": "医師を探す",
+    "featuredHospitals": "おすすめ病院",
+    "popularDepartments": "人気診療科",
+    "howItWorks": "ご利用の流れ",
+    "step1": "検索・選択",
+    "step1Desc": "ニーズに合った病院と医師を見つける",
+    "step2": "予約",
+    "step2Desc": "オンラインで簡単に予約",
+    "step3": "受診",
+    "step3Desc": "中国で世界レベルの医療を受ける"
+  },
+  "hospital": {
+    "departments": "診療科",
+    "location": "所在地",
+    "rating": "評価",
+    "languages": "言語",
+    "viewDetails": "詳細を見る",
+    "bookNow": "予約する"
+  },
+  "services": {
+    "title": "私たちのサービス",
+    "appointmentBooking": "予約",
+    "appointmentBookingDesc": "トップ医師のオンライン予約",
+    "medicalTranslation": "医療通訳",
+    "medicalTranslationDesc": "医療記録の専門翻訳",
+    "escortService": "通訳同行",
+    "escortServiceDesc": "受診時の専門通訳同行",
+    "visaAssistance": "ビザサポート",
+    "visaAssistanceDesc": "医療ビザ申請のお手伝い"
+  },
+  "common": {
+    "search": "検索",
+    "filter": "フィルター",
+    "submit": "送信",
+    "cancel": "キャンセル",
+    "loading": "読み込み中..."
+  }
+}

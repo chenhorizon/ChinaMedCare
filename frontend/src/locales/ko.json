@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "home": "홈",
+    "hospitals": "병원",
+    "doctors": "의사",
+    "services": "서비스",
+    "cost": "비용 견적",
+    "about": "회사 소개",
+    "login": "로그인",
+    "signup": "회원가입"
+  },
+  "home": {
+    "heroTitle": "중국 최고의 의료 서비스로의 관문",
+    "heroSubtitle": "최고의 병원, 전문 의사, 완벽한 의료 서비스",
+    "findHospital": "병원 찾기",
+    "findDoctor": "의사 찾기",
+    "featuredHospitals": "추천 병원",
+    "popularDepartments": "인기 진료과",
+    "howItWorks": "이용 방법",
+    "step1": "검색 및 선택",
+    "step1Desc": "필요에 맞는 병원과 의사 찾기",
+    "step2": "예약",
+    "step2Desc": "온라인으로 쉽게 예약",
+    "step3": "진료",
+    "step3Desc": "중국에서 세계 수준의 의료 받기"
+  },
+  "hospital": {
+    "departments": "진료과",
+    "location": "위치",
+    "rating": "평점",
+    "languages": "언어",
+    "viewDetails": "자세히 보기",
+    "bookNow": "예약하기"
+  },
+  "services": {
+    "title": "우리의 서비스",
+    "appointmentBooking": "예약",
+    "appointmentBookingDesc": "최고 의사 온라인 예약",
+    "medicalTranslation": "의료 번역",
+    "medicalTranslationDesc": "의료 기록 전문 번역",
+    "escortService": "동행 서비스",
+    "escortServiceDesc": "병원 방문 전문 동행",
+    "visaAssistance": "비자 지원",
+    "visaAssistanceDesc": "의료 비자 신청 지원"
+  },
+  "common": {
+    "search": "검색",
+    "filter": "필터",
+    "submit": "제출",
+    "cancel": "취소",
+    "loading": "로딩 중..."
+  }
+}
