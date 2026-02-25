@@ -134,6 +134,25 @@ docker-compose -f docker-compose.dev.yml up -d
 
 ---
 
+## 故障排除
+
+### 问题：Dockerfile 构建失败，提示找不到 requirements.txt
+
+**错误信息**：
+```
+ERROR: failed to build: failed to solve: "/requirements.txt": not found
+```
+
+**解决方案**：
+我们已经修复了这个问题！项目现在使用根目录的 `Dockerfile.backend`，它能正确地从 `backend/` 目录复制文件。
+
+确保：
+1. `railway.json` 中的 `dockerfilePath` 设置为 `"Dockerfile.backend"`
+2. 根目录下有 `Dockerfile.backend` 文件
+3. 重新触发部署
+
+---
+
 ## 常见问题
 
 **Q: 前端无法连接后端？**
