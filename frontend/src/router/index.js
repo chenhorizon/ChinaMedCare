@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const routes = [
   {
@@ -35,6 +36,28 @@ const routes = [
     path: '/about',
     name: 'About',
     component: () => import('@/views/About.vue')
+  },
+  // Admin Routes
+  {
+    path: '/admin/login',
+    name: 'AdminLogin',
+    component: () => import('@/views/admin/Login.vue')
+  },
+  {
+    path: '/admin',
+    component: () => import('@/views/admin/Layout.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        redirect: '/admin/hospitals'
+      },
+      {
+        path: 'hospitals',
+        name: 'AdminHospitals',
+        component: () => import('@/views/admin/HospitalList.vue')
+      }
+    ]
   }
 ]
 
@@ -47,6 +70,19 @@ const router = createRouter({
     } else {
       return { top: 0 }
     }
+  }
+})
+
+// Auth guard
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next('/admin/login')
+  } else if (to.path === '/admin/login' && authStore.isAuthenticated) {
+    next('/admin/hospitals')
+  } else {
+    next()
   }
 })
 
