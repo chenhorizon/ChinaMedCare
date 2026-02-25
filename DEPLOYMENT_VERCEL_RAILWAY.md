@@ -79,15 +79,20 @@ git push -u origin main
 3. 选择你的 ChinaMedCare 仓库
 4. 配置项目：
    - **Framework Preset**: Vue
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm install && npm run build`
-   - **Output Directory**: `dist`
+   - **Root Directory**: `frontend`  (重要！必须设置)
+   - **Build Command**: (留空，使用默认或 `npm run build`)
+   - **Output Directory**: (留空，使用默认或 `dist`)
 5. 点击 "Environment Variables"，添加：
    ```
    VITE_API_URL=https://你的-railway-backend.up.railway.app
    ```
 6. 点击 "Deploy" 等待部署完成
 7. 部署成功后，你会得到一个 Vercel 域名（例如：`https://chinamedcare.vercel.app`）
+
+**重要提示**：
+- Root Directory 必须设置为 `frontend`
+- Build Command 不需要加 `cd frontend`，因为 Root Directory 已经是 frontend 了
+- 我们在 `frontend/` 目录下已经放置了 `vercel.json` 配置文件
 
 ---
 
@@ -135,6 +140,24 @@ docker-compose -f docker-compose.dev.yml up -d
 ---
 
 ## 故障排除
+
+### 问题：Vercel 构建失败，提示 "cd: frontend: No such file or directory"
+
+**错误信息**：
+```
+sh: line 1: cd: frontend: No such file or directory
+```
+
+**解决方案**：
+1. 在 Vercel 项目设置中：
+   - 确保 **Root Directory** 设置为 `frontend`
+   - **Build Command** 留空或设置为 `npm run build`（不要加 `cd frontend`）
+   - **Output Directory** 留空或设置为 `dist`
+2. 重新部署
+
+我们在 `frontend/` 目录下已经放置了 `vercel.json` 配置文件，Vercel 会自动使用它。
+
+---
 
 ### 问题：Dockerfile 构建失败，提示找不到 requirements.txt
 
