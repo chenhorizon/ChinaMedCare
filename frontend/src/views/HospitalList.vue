@@ -4,7 +4,6 @@
       <h1 class="page-title">{{ t('nav.hospitals') }}</h1>
 
       <div class="filters">
-        <el-input v-model="searchQuery" :placeholder="t('common.search')" class="search-input" clearable @keyup.enter="loadHospitals" @clear="loadHospitals" />
         <el-select v-model="selectedDept" placeholder="Department" clearable @change="loadHospitals">
           <el-option label="All Departments" value="" />
           <el-option v-for="dept in departments" :key="dept" :label="dept" :value="dept" />
@@ -94,9 +93,6 @@ onMounted(() => {
   display: flex;
   gap: 16px;
   margin-bottom: 32px;
-}
-.search-input {
-  flex: 1;
 }
 .hospital-grid {
   display: grid;
