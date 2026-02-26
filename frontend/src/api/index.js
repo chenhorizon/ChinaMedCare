@@ -4,7 +4,17 @@ import axios from 'axios'
 const getApiBaseUrl = () => {
   // In production, use Vercel env var or fallback to relative path
   if (import.meta.env.PROD) {
-    return import.meta.env.VITE_API_URL || ''
+    let apiUrl = import.meta.env.VITE_API_URL || ''
+    // Ensure URL has https:// prefix
+    if (apiUrl && !apiUrl.startsWith('http')) {
+      apiUrl = 'https://' + apiUrl
+    }
+    // Remove trailing slash
+    if (apiUrl.endsWith('/')) {
+      apiUrl = apiUrl.slice(0, -1)
+    }
+    console.log('API Base URL:', apiUrl)
+    return apiUrl
   }
   // In development, use the proxy
   return ''
