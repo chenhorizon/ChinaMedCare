@@ -1,11 +1,6 @@
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import SQLAlchemyError
-import logging
 from app.db.database import SessionLocal
 from app.db.models import DBHospital, DBAdmin
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # Pre-generated hash for "admin123"
 ADMIN_PASSWORD_HASH = "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyWv5z5vW5W"
@@ -13,12 +8,7 @@ ADMIN_PASSWORD_HASH = "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyWv5z5vW
 
 def init_db():
     """Initialize database with default data"""
-    try:
-        db = SessionLocal()
-    except Exception as e:
-        logger.error(f"Failed to create database session: {e}")
-        return
-
+    db = SessionLocal()
     try:
         # Check if we already have data
         if db.query(DBHospital).count() == 0:
@@ -52,7 +42,7 @@ def init_db():
             for hospital in default_hospitals:
                 db.add(hospital)
             db.commit()
-            logger.info("Default hospitals added.")
+            print("Default hospitals added.")
 
         # Check if admin exists
         if db.query(DBAdmin).count() == 0:
@@ -63,15 +53,9 @@ def init_db():
             )
             db.add(admin)
             db.commit()
-            logger.info("Default admin user added.")
+            print("Default admin user added.")
 
-        logger.info("Database initialization complete.")
-    except SQLAlchemyError as e:
-        logger.error(f"Database error during initialization: {e}")
-        db.rollback()
-    except Exception as e:
-        logger.error(f"Unexpected error during database initialization: {e}")
-        db.rollback()
+        print("Database initialization complete.")
     finally:
         db.close()
 
