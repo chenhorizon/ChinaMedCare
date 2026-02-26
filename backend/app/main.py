@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import logging
 from app.api import hospitals, doctors, bookings
 from app.api.admin import auth as admin_auth
 from app.api.admin import hospitals as admin_hospitals
 from app.db import engine, Base
 from app.db.init_db import init_db
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="ChinaMedCare API", version="1.0.0")
 
@@ -33,10 +37,16 @@ app.include_router(admin_hospitals.router, prefix="/api/admin/hospitals", tags=[
 @app.on_event("startup")
 def on_startup():
     """Initialize database on startup"""
-    # Create tables
-    Base.metadata.create_all(bind=engine)
-    # Initialize with default data
-    init_db()
+    try:
+        logger.info("Creating database tables...")
+        # Create tables
+        Base.metadata.create_all(bind=engine)
+        logger.info("Database tables created successfully")
+        # Initialize with default data
+        init_db()
+    except Exception as e:
+        logger.error(f"Error during database initialization: {e}")
+        logger.warning("Application will start without full database initialization")
 
 
 @app.get("/")
