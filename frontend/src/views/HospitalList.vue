@@ -26,10 +26,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import HospitalCard from '@/components/HospitalCard.vue'
 import { hospitalApi } from '@/api/index'
 
 const { t } = useI18n()
+const route = useRoute()
 
 const loading = ref(false)
 const hospitals = ref([])
@@ -57,6 +59,13 @@ async function loadHospitals() {
 }
 
 onMounted(() => {
+  // Read URL parameters
+  if (route.query.department) {
+    selectedDept.value = route.query.department
+  }
+  if (route.query.city) {
+    selectedCity.value = route.query.city
+  }
   loadHospitals()
 })
 </script>
