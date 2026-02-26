@@ -17,14 +17,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(username, password) {
     try {
-      console.log('Attempting login with:', { username, password: '***' })
       const response = await authApi.login({ username, password })
-      console.log('Login response:', response)
       setToken(response.data.access_token)
       return true
     } catch (error) {
-      console.error('Login failed:', error)
-      console.error('Error response:', error.response)
       return false
     }
   }

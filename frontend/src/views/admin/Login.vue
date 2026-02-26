@@ -38,10 +38,6 @@
           </el-button>
         </el-form-item>
       </el-form>
-
-      <div class="login-footer">
-        <p>Default: admin / admin123</p>
-      </div>
     </div>
   </div>
 </template>
@@ -76,9 +72,7 @@ async function handleLogin() {
 
     loading.value = true
     try {
-      console.log('Logging in with:', form.username, form.password)
       const success = await authStore.login(form.username, form.password)
-      console.log('Login success:', success)
       if (success) {
         ElMessage.success('Login successful!')
         router.push('/admin/hospitals')
@@ -86,8 +80,7 @@ async function handleLogin() {
         ElMessage.error('Invalid username or password')
       }
     } catch (error) {
-      console.error('Login error:', error)
-      ElMessage.error('Login failed: ' + (error.response?.data?.detail || error.message || 'Unknown error'))
+      ElMessage.error('Login failed, please try again')
     } finally {
       loading.value = false
     }
@@ -134,18 +127,5 @@ async function handleLogin() {
 
 .login-button {
   width: 100%;
-}
-
-.login-footer {
-  text-align: center;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid #eee;
-}
-
-.login-footer p {
-  margin: 0;
-  color: #999;
-  font-size: 13px;
 }
 </style>
