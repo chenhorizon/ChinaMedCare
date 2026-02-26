@@ -40,21 +40,32 @@ class HospitalService:
             filters.append(DBHospital.name.ilike(f"%{search}%"))
         if city:
             filters.append(DBHospital.location.ilike(f"%{city}%"))
-        if department:
-            filters.append(DBHospital.departments.contains([department]))
 
         if filters:
             query = query.filter(and_(*filters))
 
-        # Get total count
-        total = query.count()
+        # Get all hospitals first, then filter by department in Python
+        # This is more reliable across different databases
+        all_hospitals = query.all()
+
+        # Filter by department if specified
+        if department:
+            filtered_hospitals = [
+                h for h in all_hospitals
+                if h.departments and department in h.departments
+            ]
+        else:
+            filtered_hospitals = all_hospitals
+
+        # Get total count after filtering
+        total = len(filtered_hospitals)
 
         # Apply pagination
         offset = (page - 1) * page_size
-        db_hospitals = query.offset(offset).limit(page_size).all()
+        paginated_hospitals = filtered_hospitals[offset : offset + page_size]
 
         # Convert to Pydantic models
-        items = [HospitalService._to_pydantic(h) for h in db_hospitals]
+        items = [HospitalService._to_pydantic(h) for h in paginated_hospitals]
         total_pages = (total + page_size - 1) // page_size if total > 0 else 0
 
         return PaginatedHospitalResponse(
