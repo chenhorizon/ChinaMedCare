@@ -13,18 +13,10 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="ChinaMedCare API", version="1.0.0")
 
-# Get allowed origins from environment variable or use defaults
-cors_origins_env = os.getenv("CORS_ORIGINS", "")
-allowed_origins = []
-if cors_origins_env:
-    allowed_origins = [origin.strip() for origin in cors_origins_env.split(",")]
-
-logger.info(f"Allowed CORS origins: {allowed_origins}")
-
-# For development, allow all origins
+# Allow all origins for simplicity
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if not allowed_origins else allowed_origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
