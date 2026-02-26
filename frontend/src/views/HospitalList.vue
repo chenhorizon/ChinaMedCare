@@ -4,6 +4,7 @@
       <h1 class="page-title">{{ t('nav.hospitals') }}</h1>
 
       <div class="filters">
+        <el-input v-model="searchQuery" :placeholder="t('common.search')" class="search-input" clearable @keyup.enter="loadHospitals" @clear="loadHospitals" />
         <el-select v-model="selectedDept" placeholder="Department" clearable @change="loadHospitals">
           <el-option label="All Departments" value="" />
           <el-option v-for="dept in departments" :key="dept" :label="dept" :value="dept" />
@@ -35,6 +36,7 @@ const route = useRoute()
 
 const loading = ref(false)
 const hospitals = ref([])
+const searchQuery = ref('')
 const selectedDept = ref('')
 const selectedCity = ref('')
 
@@ -45,6 +47,7 @@ async function loadHospitals() {
   loading.value = true
   try {
     const params = {}
+    if (searchQuery.value) params.search = searchQuery.value
     if (selectedDept.value) params.department = selectedDept.value
     if (selectedCity.value) params.city = selectedCity.value
 
@@ -60,6 +63,9 @@ async function loadHospitals() {
 
 onMounted(() => {
   // Read URL parameters
+  if (route.query.search) {
+    searchQuery.value = route.query.search
+  }
   if (route.query.department) {
     selectedDept.value = route.query.department
   }
@@ -88,6 +94,9 @@ onMounted(() => {
   display: flex;
   gap: 16px;
   margin-bottom: 32px;
+}
+.search-input {
+  flex: 1;
 }
 .hospital-grid {
   display: grid;

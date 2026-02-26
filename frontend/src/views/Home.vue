@@ -55,9 +55,15 @@
                 <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
                 </svg>
-                <input type="text" class="search-input" placeholder="Search by hospital, specialty, or city..." />
+                <input
+                  v-model="searchQuery"
+                  type="text"
+                  class="search-input"
+                  placeholder="Search by hospital, specialty, or city..."
+                  @keyup.enter="handleSearch"
+                />
               </div>
-              <button class="search-btn" @click="$router.push('/hospitals')">
+              <button class="search-btn" @click="handleSearch">
                 <svg viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                 </svg>
@@ -243,6 +249,7 @@ const router = useRouter()
 
 const loading = ref(false)
 const hospitals = ref([])
+const searchQuery = ref('')
 
 async function loadHospitals() {
   loading.value = true
@@ -298,6 +305,14 @@ const testimonials = ref([
     text: 'Saved 60% on my procedure compared to US prices. The quality was just as good, if not better.'
   }
 ])
+
+const handleSearch = () => {
+  const query = {}
+  if (searchQuery.value) {
+    query.search = searchQuery.value
+  }
+  router.push({ path: '/hospitals', query })
+}
 
 const searchByDept = (dept) => {
   router.push({ path: '/hospitals', query: { department: dept } })
