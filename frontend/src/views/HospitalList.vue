@@ -4,31 +4,36 @@
       <h1 class="page-title">{{ t('nav.hospitals') }}</h1>
 
       <div class="filters">
-        <el-input v-model="searchQuery" :placeholder="t('common.search')" class="search-input" />
-        <el-select v-model="selectedDept" placeholder="Department" clearable>
+        <el-input v-model="searchQuery" :placeholder="t('common.search')" class="search-input" clearable @keyup.enter="loadHospitals" />
+        <el-select v-model="selectedDept" placeholder="Department" clearable @change="loadHospitals">
           <el-option label="All Departments" value="" />
           <el-option v-for="dept in departments" :key="dept" :label="dept" :value="dept" />
         </el-select>
-        <el-select v-model="selectedCity" placeholder="City" clearable>
+        <el-select v-model="selectedCity" placeholder="City" clearable @change="loadHospitals">
           <el-option label="All Cities" value="" />
           <el-option v-for="city in cities" :key="city" :label="city" :value="city" />
         </el-select>
       </div>
 
-      <div class="hospital-grid">
-        <HospitalCard v-for="hospital in filteredHospitals" :key="hospital.id" :hospital="hospital" />
+      <div class="hospital-grid" v-loading="loading">
+        <HospitalCard v-for="hospital in hospitals" :key="hospital.id" :hospital="hospital" />
       </div>
+
+      <el-empty v-if="!loading && hospitals.length === 0" description="No hospitals found" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import HospitalCard from '@/components/HospitalCard.vue'
+import { hospitalApi } from '@/api/index'
 
 const { t } = useI18n()
 
+const loading = ref(false)
+const hospitals = ref([])
 const searchQuery = ref('')
 const selectedDept = ref('')
 const selectedCity = ref('')
@@ -36,43 +41,26 @@ const selectedCity = ref('')
 const departments = ['Cardiology', 'Neurology', 'Oncology', 'Orthopedics', 'TCM', 'Dermatology', 'Reproductive']
 const cities = ['Beijing', 'Shanghai', 'Guangzhou', 'Shenzhen', 'Chengdu']
 
-const hospitals = ref([
-  {
-    id: 1,
-    name: 'Peking Union Medical College Hospital',
-    location: 'Beijing, China',
-    rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400',
-    departments: ['Cardiology', 'Neurology', 'Oncology', 'Orthopedics'],
-    languages: ['English', 'Chinese', 'Japanese']
-  },
-  {
-    id: 2,
-    name: 'Shanghai First People\'s Hospital',
-    location: 'Shanghai, China',
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=400',
-    departments: ['Cardiology', 'Orthopedics', 'TCM', 'Dermatology'],
-    languages: ['English', 'Chinese', 'Korean']
-  },
-  {
-    id: 3,
-    name: 'Guangdong Provincial People\'s Hospital',
-    location: 'Guangzhou, China',
-    rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400',
-    departments: ['Oncology', 'Cardiology', 'Reproductive', 'Pediatrics'],
-    languages: ['English', 'Chinese', 'Russian']
-  }
-])
+async function loadHospitals() {
+  loading.value = true
+  try {
+    const params = {}
+    if (searchQuery.value) params.search = searchQuery.value
+    if (selectedDept.value) params.department = selectedDept.value
+    if (selectedCity.value) params.city = selectedCity.value
 
-const filteredHospitals = computed(() => {
-  return hospitals.value.filter(h => {
-    const matchesSearch = h.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchesDept = !selectedDept.value || h.departments.includes(selectedDept.value)
-    const matchesCity = !selectedCity.value || h.location.includes(selectedCity.value)
-    return matchesSearch && matchesDept && matchesCity
-  })
+    const response = await hospitalApi.getAll(params)
+    hospitals.value = response.data || []
+  } catch (error) {
+    console.error('Failed to load hospitals:', error)
+    hospitals.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  loadHospitals()
 })
 </script>
 

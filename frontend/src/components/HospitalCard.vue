@@ -27,11 +27,11 @@
             <span class="rating-score">{{ hospital.rating }}</span>
             <span class="rating-label">Excellent</span>
           </div>
-          <div class="rating-reviews">{{ hospital.reviews }} reviews</div>
+          <div v-if="hospital.reviews" class="rating-reviews">{{ hospital.reviews }} reviews</div>
         </div>
       </div>
       <div class="card-tags">
-        <span v-for="dept in hospital.departments.slice(0, 3)" :key="dept" class="tag-dept">
+        <span v-for="dept in (hospital.departments || []).slice(0, 3)" :key="dept" class="tag-dept">
           {{ dept }}
         </span>
       </div>
@@ -39,7 +39,7 @@
         <svg viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6H10a3 3 0 013 3v.5a2.5 2.5 0 002.5 2.5h.5c.213 0 .417.034.61.097a6.002 6.002 0 01-8.778 6.175A4.996 4.996 0 017 15v-.5a2.5 2.5 0 00-2.5-2.5H4a.5.5 0 01-.5-.5v-.973c0-.358.072-.702.206-1.027a.5.5 0 01.626-.474z" clip-rule="evenodd"/>
         </svg>
-        <span>{{ hospital.languages.join(', ') }}</span>
+        <span>{{ (hospital.languages || []).join(', ') }}</span>
       </div>
       <div class="card-footer">
         <button class="btn-view">View Details</button>

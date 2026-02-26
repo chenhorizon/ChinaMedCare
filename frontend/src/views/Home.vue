@@ -111,9 +111,10 @@
             </svg>
           </button>
         </div>
-        <div class="hospital-grid">
+        <div class="hospital-grid" v-loading="loading">
           <HospitalCard v-for="hospital in hospitals" :key="hospital.id" :hospital="hospital" />
         </div>
+        <el-empty v-if="!loading && hospitals.length === 0" description="No hospitals found" />
       </div>
     </section>
 
@@ -233,47 +234,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import HospitalCard from '@/components/HospitalCard.vue'
+import { hospitalApi } from '@/api/index'
 
 const router = useRouter()
 
-const hospitals = ref([
-  {
-    id: 1,
-    name: 'Peking Union Medical College Hospital',
-    location: 'Beijing, China',
-    rating: 4.9,
-    reviews: 2341,
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600',
-    departments: ['Cardiology', 'Neurology', 'Oncology', 'Orthopedics'],
-    languages: ['English', 'Chinese', 'Japanese'],
-    accreditation: 'JCI'
-  },
-  {
-    id: 2,
-    name: 'Shanghai First People\'s Hospital',
-    location: 'Shanghai, China',
-    rating: 4.8,
-    reviews: 1892,
-    image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=600',
-    departments: ['Cardiology', 'Orthopedics', 'TCM', 'Dermatology'],
-    languages: ['English', 'Chinese', 'Korean'],
-    accreditation: 'JCI'
-  },
-  {
-    id: 3,
-    name: 'Guangdong Provincial People\'s Hospital',
-    location: 'Guangzhou, China',
-    rating: 4.7,
-    reviews: 1567,
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600',
-    departments: ['Oncology', 'Cardiology', 'Reproductive', 'Pediatrics'],
-    languages: ['English', 'Chinese', 'Russian'],
-    accreditation: 'JCI'
+const loading = ref(false)
+const hospitals = ref([])
+
+async function loadHospitals() {
+  loading.value = true
+  try {
+    const response = await hospitalApi.getAll()
+    hospitals.value = (response.data || []).slice(0, 3)
+  } catch (error) {
+    console.error('Failed to load hospitals:', error)
+    hospitals.value = []
+  } finally {
+    loading.value = false
   }
-])
+}
+
+onMounted(() => {
+  loadHospitals()
+})
 
 const departments = ref([
   { id: 1, name: 'Cardiology', icon: '❤️', hospitals: 85 },
