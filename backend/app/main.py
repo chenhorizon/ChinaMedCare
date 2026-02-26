@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import logging
@@ -14,15 +14,30 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title="ChinaMedCare API", version="1.0.0")
 
 # Get allowed origins from environment variable or use defaults
-allowed_origins = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost").split(",")
+cors_origins_env = os.getenv("CORS_ORIGINS", "")
+allowed_origins = []
+if cors_origins_env:
+    allowed_origins = [origin.strip() for origin in cors_origins_env.split(",")]
 
+logger.info(f"Allowed CORS origins: {allowed_origins}")
+
+# For development, allow all origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=["*"] if not allowed_origins else allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"Request: {request.method} {request.url}")
+    logger.info(f"Headers: {dict(request.headers)}")
+    response = await call_next(request)
+    logger.info(f"Response status: {response.status_code}")
+    return response
 
 # Public API routes
 app.include_router(hospitals.router, prefix="/api/hospitals", tags=["hospitals"])
