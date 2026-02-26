@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import HospitalCard from '@/components/HospitalCard.vue'
@@ -60,8 +60,13 @@ async function loadHospitals() {
   }
 }
 
-onMounted(() => {
-  // Read URL parameters
+function resetAndLoadFromRoute() {
+  // Reset all filters first
+  searchQuery.value = ''
+  selectedDept.value = ''
+  selectedCity.value = ''
+
+  // Then read from URL parameters
   if (route.query.search) {
     searchQuery.value = route.query.search
   }
@@ -71,8 +76,22 @@ onMounted(() => {
   if (route.query.city) {
     selectedCity.value = route.query.city
   }
+
+  // Load hospitals with new filters
   loadHospitals()
+}
+
+onMounted(() => {
+  resetAndLoadFromRoute()
 })
+
+// Watch for route changes
+watch(
+  () => route.query,
+  () => {
+    resetAndLoadFromRoute()
+  }
+)
 </script>
 
 <style scoped>
