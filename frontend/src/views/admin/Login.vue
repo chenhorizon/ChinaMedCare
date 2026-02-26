@@ -76,7 +76,9 @@ async function handleLogin() {
 
     loading.value = true
     try {
+      console.log('Logging in with:', form.username, form.password)
       const success = await authStore.login(form.username, form.password)
+      console.log('Login success:', success)
       if (success) {
         ElMessage.success('Login successful!')
         router.push('/admin/hospitals')
@@ -84,7 +86,8 @@ async function handleLogin() {
         ElMessage.error('Invalid username or password')
       }
     } catch (error) {
-      ElMessage.error('Login failed, please try again')
+      console.error('Login error:', error)
+      ElMessage.error('Login failed: ' + (error.response?.data?.detail || error.message || 'Unknown error'))
     } finally {
       loading.value = false
     }
