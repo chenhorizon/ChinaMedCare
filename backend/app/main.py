@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import logging
 from app.api import hospitals, doctors, bookings
 from app.api.admin import auth as admin_auth
 from app.api.admin import hospitals as admin_hospitals
 from app.db import engine, Base
 from app.db.init_db import init_db
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="ChinaMedCare API", version="1.0.0")
 

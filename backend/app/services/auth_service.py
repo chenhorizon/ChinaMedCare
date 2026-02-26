@@ -1,5 +1,6 @@
 from datetime import timedelta
 from typing import Optional
+import logging
 from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.core.security import (
@@ -8,6 +9,9 @@ from app.core.security import (
     DEFAULT_ADMIN_HASH
 )
 from app.db.models import DBAdmin
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class AuthService:
@@ -21,12 +25,23 @@ class AuthService:
     @classmethod
     def authenticate_admin(cls, db: Session, username: str, password: str) -> bool:
         """Authenticate admin credentials against database"""
+        logger.info(f"Attempting login for user: {username}")
+
         admin = cls.get_admin(db, username)
         if admin:
-            return verify_password(password, admin.hashed_password)
+            logger.info(f"Found admin user in DB: {username}")
+            valid = verify_password(password, admin.hashed_password)
+            logger.info(f"Password valid: {valid}")
+            return valid
+
+        logger.info(f"No admin found in DB, trying default admin")
         # Fallback to default admin if no admin in DB
         if username == settings.ADMIN_USERNAME:
-            return verify_password(password, DEFAULT_ADMIN_HASH)
+            valid = verify_password(password, DEFAULT_ADMIN_HASH)
+            logger.info(f"Default admin password valid: {valid}")
+            return valid
+
+        logger.info(f"Authentication failed for user: {username}")
         return False
 
     @classmethod
@@ -55,3 +70,6 @@ class AuthService:
             db.add(admin)
             db.commit()
             db.refresh(admin)
+            logger.info("Default admin user created in database")
+        else:
+            logger.info("Admin user already exists in database")

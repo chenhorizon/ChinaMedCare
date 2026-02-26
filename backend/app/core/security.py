@@ -4,15 +4,15 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from .config import settings
 
-# Password hashing context - use a simpler approach
-# Pre-generated hash for "admin123" to avoid bcrypt issues
-DEFAULT_ADMIN_HASH = "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyWv5z5vW5W"
-
+# Password hashing context
 pwd_context = CryptContext(
     schemes=["bcrypt"],
     deprecated="auto",
     bcrypt__rounds=12
 )
+
+# Pre-generated hash for "admin123"
+DEFAULT_ADMIN_HASH = "$2b$12$IuTmKBUiKHblT8P4FmjpleJ4TiZ7OcVbrDfwVX53C4ht4OMS4TLvC"
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -20,22 +20,12 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     try:
         return pwd_context.verify(plain_password, hashed_password)
     except Exception:
-        # Fallback for testing: check against default password
-        if plain_password == "admin123" and hashed_password == DEFAULT_ADMIN_HASH:
-            return True
         return False
 
 
 def get_password_hash(password: str) -> str:
-    """Hash a password - with fallback"""
-    try:
-        return pwd_context.hash(password)
-    except Exception:
-        # If bcrypt fails, return pre-generated hash for "admin123"
-        if password == "admin123":
-            return DEFAULT_ADMIN_HASH
-        # For other passwords, use a simple hash (not for production!)
-        return f"$2b$12${password[:22].ljust(22, 'x')}..."
+    """Hash a password"""
+    return pwd_context.hash(password)
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:

@@ -1,9 +1,14 @@
+import logging
 from sqlalchemy.orm import Session
 from app.db.database import SessionLocal
 from app.db.models import DBHospital, DBAdmin
+from app.core.security import DEFAULT_ADMIN_HASH
 
-# Pre-generated hash for "admin123"
-ADMIN_PASSWORD_HASH = "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyWv5z5vW5W"
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Pre-generated hash for "admin123" (imported from security.py)
+ADMIN_PASSWORD_HASH = DEFAULT_ADMIN_HASH
 
 
 def init_db():
@@ -42,10 +47,14 @@ def init_db():
             for hospital in default_hospitals:
                 db.add(hospital)
             db.commit()
-            print("Default hospitals added.")
+            logger.info("Default hospitals added.")
+        else:
+            logger.info("Hospitals already exist in database.")
 
         # Check if admin exists
-        if db.query(DBAdmin).count() == 0:
+        admin_count = db.query(DBAdmin).count()
+        logger.info(f"Admin users in database: {admin_count}")
+        if admin_count == 0:
             # Add default admin (password: admin123)
             admin = DBAdmin(
                 username="admin",
@@ -53,9 +62,15 @@ def init_db():
             )
             db.add(admin)
             db.commit()
-            print("Default admin user added.")
+            logger.info("Default admin user added.")
+        else:
+            logger.info("Admin user already exists in database.")
 
-        print("Database initialization complete.")
+        logger.info("Database initialization complete.")
+    except Exception as e:
+        logger.error(f"Error during database initialization: {e}")
+        db.rollback()
+        raise
     finally:
         db.close()
 
