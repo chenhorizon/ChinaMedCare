@@ -34,28 +34,37 @@ class HospitalService:
         # Build query
         query = db.query(DBHospital)
 
-        # Apply filters
-        filters = []
-        if search:
-            filters.append(DBHospital.name.ilike(f"%{search}%"))
-        if city:
-            filters.append(DBHospital.location.ilike(f"%{city}%"))
-
-        if filters:
-            query = query.filter(and_(*filters))
-
-        # Get all hospitals first, then filter by department in Python
-        # This is more reliable across different databases
+        # Get all hospitals first, then filter in Python for better control
         all_hospitals = query.all()
 
-        # Filter by department if specified
-        if department:
+        # Apply filters in Python
+        filtered_hospitals = all_hospitals
+
+        # Search filter: search in name, location, and departments
+        if search:
+            search_lower = search.lower()
             filtered_hospitals = [
-                h for h in all_hospitals
-                if h.departments and department in h.departments
+                h for h in filtered_hospitals
+                if (h.name and search_lower in h.name.lower())
+                or (h.location and search_lower in h.location.lower())
+                or (h.departments and any(search_lower in dept.lower() for dept in h.departments))
             ]
-        else:
-            filtered_hospitals = all_hospitals
+
+        # City filter
+        if city:
+            city_lower = city.lower()
+            filtered_hospitals = [
+                h for h in filtered_hospitals
+                if h.location and city_lower in h.location.lower()
+            ]
+
+        # Department filter (case-insensitive)
+        if department:
+            dept_lower = department.lower()
+            filtered_hospitals = [
+                h for h in filtered_hospitals
+                if h.departments and any(dept_lower == d.lower() for d in h.departments)
+            ]
 
         # Get total count after filtering
         total = len(filtered_hospitals)
